@@ -3,25 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %>></title>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="./stylesheets/style.css">
 </head>
 <body>
-  <h1><%= title %></h1>
-  <% if (locals.messages) { %>
-    <ul>
+  <main>
+    <h1><%= title %></h1>
+
+    <% if (locals.messages) { %>
       <% messages.forEach((message) => { %>
-        <li>
-          <%= message.title %>
-          <%= message.content %>
-          <%= message.timestamp %>
-          <%= message.firstname %>
-          <%= message.lastname %>
-          <%= message.email %>
-          <%= message.membership %>
-          <%= message.admin %>
-        </li>
+        <div class="message_card">
+          <header>
+            <h2><%= message.title %></h2>
+            <p><%= message.timestamp %></p>
+          </header>
+          <div class="content">
+            <%= message.content %>
+          </div>
+        </div>
       <% }) %>
-    </ul>
-  <% } %>
+    <% } %>
+  </main>
 </body>
 </html>

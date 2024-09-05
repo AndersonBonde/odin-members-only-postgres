@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  max-width: 900px;
+  margin-inline: auto;
+  background-color: lightgray;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.message_card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.message_card > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}

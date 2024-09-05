@@ -4,7 +4,7 @@ const index = async (req, res) => {
   const messages = await db.getAllMessages();
 
   res.render('index', {
-    title: 'Homepage',
+    title: 'Message Board',
     messages: messages,
   })
 };
