@@ -15,7 +15,7 @@
         <div class="message_card">
           <header>
             <h2><%= message.title %></h2>
-            <p><%= message.timestamp %></p>
+            <p><%= new Date(message.timestamp).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) %></p>
           </header>
           <div class="content">
             <%= message.content %>
@@ -23,6 +23,7 @@
         </div>
       <% }) %>
     <% } %>
+    <a href="/" class="link_btn">Leave a message</a>
   </main>
 </body>
 </html>

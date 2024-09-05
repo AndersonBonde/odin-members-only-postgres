@@ -9,7 +9,7 @@ main {
   margin-inline: auto;
   background-color: lightgray;
   margin-top: 2rem;
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 6px;
 }
 
@@ -21,6 +21,7 @@ h1 {
 .message_card {
   background-color: white;
   padding: 1rem;
+  margin-bottom: 1rem;
   border-radius: 4px;
 }
 
@@ -29,4 +30,18 @@ h1 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.link_btn {
+  display: inline-block;
+  padding: 6px 10px;
+  background-color: white;
+  color: black;
+  text-decoration: none;
+}
+
+.link_btn:hover {
+  cursor: pointer;
+  outline: 1px solid black;
+  border-radius: 4px;
 }
