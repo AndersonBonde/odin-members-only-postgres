@@ -6,6 +6,14 @@ async function getAllMessages() {
   return rows;
 };
 
+async function createMessage(obj) {
+  const { title, content } = obj;
+
+  // TODO Update to include user_id, user_id is required to not be null;
+
+  await pool.query('INSERT INTO messages (title, content) VALUES ($1, $2)', [title, content]);
+}
+
 module.exports = {
   getAllMessages,
 }
