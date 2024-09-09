@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 const db = require('../database/queries');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 const validateMessage = [
   body('title').trim()
@@ -36,6 +37,7 @@ const index = async (req, res) => {
   res.render('index', {
     title: 'Message Board',
     messages: messages,
+    user: req.user,
   })
 };
 
@@ -83,6 +85,21 @@ const loginGet = async (req, res) => {
   });
 };
 
+const loginPost = passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+});
+
+const logoutGet = async (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+
+    res.redirect('/');
+  });
+};
+
 const newMessageGet = async (req, res) => {
   res.render('message_form', {
     title: 'New message'
@@ -115,6 +132,8 @@ module.exports = {
   signUpGet,
   signUpPost,
   loginGet,
+  loginPost,
+  logoutGet,
   newMessageGet,
   newMessagePost,
 }

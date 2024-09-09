@@ -10,7 +10,12 @@
   <main>
     <header>
       <h1><%= title %></h1>
-      <a href="/signup" class="link_btn">Sign Up</a>
+      <% if (!locals.user) { %>
+        <a href="/signup" class="link_btn">Sign Up</a>
+        <a href="/login" class="link_btn">Login</a>
+      <% } else { %>
+        <a href="/logout" class="link_btn">Logout</a>
+      <% } %>
     </header>
 
     <% if (locals.messages) { %>

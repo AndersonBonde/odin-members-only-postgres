@@ -17,6 +17,7 @@ header {
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
+  gap: 12px;
 }
 
 h1 {

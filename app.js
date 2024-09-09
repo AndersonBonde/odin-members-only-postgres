@@ -7,6 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const pool = require('./database/pool');
+const db = require('./database/queries');
 const indexRouter = require('./routes/indexRouter');
 
 const app = express();
@@ -38,7 +39,7 @@ const strategy = new LocalStrategy({
   },
   async (email, password, done) => {
     try {
-      const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+      const user = await db.findUserByEmail(email);
 
       if (!user) {
         return done(null, false, { message: 'Incorrect email' });
