@@ -12,10 +12,31 @@
       <h1><%= title %></h1>
     </header>
     <form action="" method="post">
-
+      <div class="form_row">
+        <label for="firstname">First name</label>
+        <input type="text" name="firstname" value="<%= undefined === locals.info ? '' : info.firstname %>" required>
+      </div>
+      <div class="form_row">
+        <label for="lastname">Last name</label>
+        <input type="text" name="lastname" value="<%= undefined === locals.info ? '' : info.lastname %>" required>
+      </div>
+      <div class="form_row">
+        <label for="email">Email</label>
+        <input type="email" name="email" value="<%= undefined === locals.info ? '' : info.email %>" required>
+      </div>
+      <div class="form_row">
+        <label for="password">Password</label>
+        <input type="password" name="password" required>
+      </div>
+      <div class="form_row">
+        <label for="password_confirm">Confirm your password</label>
+        <input type="password" name="password_confirm" required>
+      </div>
+      <button type="submit">Submit</button>
     </form>
 
-    <%- include(./partials/errors.ejs) %>
+    <br>
+    <%- include('./partials/errors.ejs') %>
   </main>
 </body>
 </html>

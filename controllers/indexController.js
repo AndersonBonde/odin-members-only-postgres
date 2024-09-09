@@ -1,5 +1,6 @@
-const db = require('../database/queries');
 const { body, validationResult } = require('express-validator');
+const db = require('../database/queries');
+const bcrypt = require('bcryptjs');
 
 const validateMessage = [
   body('title').trim()
@@ -15,14 +16,18 @@ const validateNewUser = [
     .isLength({ min: 1 }).withMessage('Your last name must not be empty'),
   body('email').trim()
     .custom(async (value) => {
-      const user = await pool.query('SELECT * FROM users WHERE email = $1', [value]);
+      const user = await db.findUserByEmail(value);
 
       if (user) {
         throw new Error('Email already in use');
       }
     }),
   body('password').trim()
-    .isLength({ min: 8 }).withMessage('Password minimum length is 8'),
+    .isLength({ min: 3 }).withMessage('Password minimum length is 3'),
+  body('password_confirm').trim()
+    .custom((value, { req }) => {
+      return req.body.password === value;
+    }).withMessage(`Password and password confirm didn't match`),
 ]
 
 const index = async (req, res) => {
@@ -34,12 +39,6 @@ const index = async (req, res) => {
   })
 };
 
-const newMessageGet = async (req, res) => {
-  res.render('message_form', {
-    title: 'New message'
-  });
-};
-
 const signUpGet = async (req, res) => {
   res.render('signup_form', {
     title: 'Sign up',
@@ -48,10 +47,47 @@ const signUpGet = async (req, res) => {
 
 const signUpPost = [
   validateNewUser,
-  async (req, res) => {
-    //TODO finish sighUpPost;
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    const info = { firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email };
+
+    if (!errors.isEmpty()) {
+      res.render('signup_form', {
+        title: 'Sign up',
+        info: info,
+        errors: errors.array(),
+      })
+    } else {
+      bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+        if (err) next(err);
+
+        const obj = {
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          email: req.body.email,
+          password: hashedPassword,
+        }
+
+        await db.createUser(obj);
+        console.log('User created successfully', obj);
+      });
+
+      res.redirect('/');
+    }
   }
 ];
+
+const loginGet = async (req, res) => {
+  res.render('login_form', {
+    title: 'Login',
+  });
+};
+
+const newMessageGet = async (req, res) => {
+  res.render('message_form', {
+    title: 'New message'
+  });
+};
   
 const newMessagePost = [
   validateMessage,
@@ -77,6 +113,8 @@ const newMessagePost = [
 module.exports = {
   index,
   signUpGet,
+  signUpPost,
+  loginGet,
   newMessageGet,
   newMessagePost,
 }

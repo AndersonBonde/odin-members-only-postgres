@@ -14,6 +14,20 @@ async function createMessage(obj) {
   await pool.query('INSERT INTO messages (title, content) VALUES ($1, $2)', [title, content]);
 }
 
+async function createUser(obj) {
+  const { firstname, lastname, email, password } = obj;
+
+  await pool.query('INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4)', [firstname, lastname, email, password]);
+}
+
+async function findUserByEmail(email) {
+  const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+
+  return rows[0];
+}
+
 module.exports = {
   getAllMessages,
+  createUser,
+  findUserByEmail,
 }
