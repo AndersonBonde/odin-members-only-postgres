@@ -29,9 +29,14 @@
     <% if (locals.messages) { %>
       <% messages.forEach((message) => { %>
         <div class="message_card">
+          <% if (locals.user && user.membership) { %>
+            User: <%= message.firstname %> <%= message.lastname %>
+          <% } %>
           <header>
             <h2><%= message.title %></h2>
-            <p><%= new Date(message.timestamp).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) %></p>
+            <% if (locals.user && user.membership) { %>
+              <p><%= new Date(message.timestamp).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }) %></p>
+            <% } %>
           </header>
           <div class="content">
             <%= message.content %>
