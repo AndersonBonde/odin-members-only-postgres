@@ -6,12 +6,13 @@ async function getAllMessages() {
   return rows;
 };
 
-async function createMessage(obj) {
-  const { title, content } = obj;
+async function createMessage(user, messageObj) {
+  const { title, content } = messageObj;
+  const { id } = user;
 
   // TODO Update to include user_id, user_id is required to not be null;
 
-  await pool.query('INSERT INTO messages (title, content) VALUES ($1, $2)', [title, content]);
+  await pool.query('INSERT INTO messages (title, content, user_id) VALUES ($1, $2, $3)', [title, content, id]);
 }
 
 async function createUser(obj) {
@@ -28,6 +29,7 @@ async function findUserByEmail(email) {
 
 module.exports = {
   getAllMessages,
+  createMessage,
   createUser,
   findUserByEmail,
 }

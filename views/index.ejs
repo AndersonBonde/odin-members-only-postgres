@@ -17,6 +17,11 @@
         <a href="/logout" class="link_btn">Logout</a>
       <% } %>
     </header>
+    <% if (locals.user) { %>
+      <div class="user_info" style="margin-bottom: 8px;">
+        <p>Logged in as <%= user.email %></p>
+      </div>
+    <% } %>
 
     <% if (locals.messages) { %>
       <% messages.forEach((message) => { %>
@@ -31,7 +36,10 @@
         </div>
       <% }) %>
     <% } %>
-    <a href="/message" class="link_btn">Leave a message</a>
+    
+    <% if (locals.user) { %>
+      <a href="/message" class="link_btn">Leave a message</a>
+    <% } %>
   </main>
 </body>
 </html>

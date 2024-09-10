@@ -100,6 +100,8 @@ const logoutGet = async (req, res, next) => {
   });
 };
 
+// TODO member_form
+
 const newMessageGet = async (req, res) => {
   res.render('message_form', {
     title: 'New message'
@@ -119,8 +121,7 @@ const newMessagePost = [
         errors: errors.array(),
       });
     } else {
-      //TODO Need user_id to create message, finish login & signup screen first;
-      console.log('New message post successful WIP', message);
+      await db.createMessage(req.user, message);
 
       res.redirect('/');
     }
