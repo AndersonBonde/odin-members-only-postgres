@@ -80,14 +80,25 @@ const signUpPost = [
 ];
 
 const loginGet = async (req, res) => {
+  let errors = [];
+
+  if (req.session.messages.length) {
+    for (let i = 0; i < req.session.messages.length; i++) {
+      errors.push({ msg: req.session.messages.splice(0, 1) });
+      i--;
+    }
+  }
+
   res.render('login_form', {
     title: 'Login',
+    errors: errors, 
   });
 };
 
 const loginPost = passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
+  failureMessage: true,
 });
 
 const logoutGet = async (req, res, next) => {
