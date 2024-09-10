@@ -14,12 +14,15 @@
         <a href="/signup" class="link_btn">Sign Up</a>
         <a href="/login" class="link_btn">Login</a>
       <% } else { %>
+        <% if (!user.membership) { %>
+          <a href="/member" class="link_btn">Become a member</a>
+        <% } %>
         <a href="/logout" class="link_btn">Logout</a>
       <% } %>
     </header>
     <% if (locals.user) { %>
       <div class="user_info" style="margin-bottom: 8px;">
-        <p>Logged in as <%= user.email %></p>
+        <p>Logged in as <%= user.email %> <%= user.membership ? 'member' : '' %></p>
       </div>
     <% } %>
 

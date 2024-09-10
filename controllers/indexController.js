@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { body, validationResult } = require('express-validator');
 const db = require('../database/queries');
 const bcrypt = require('bcryptjs');
@@ -80,18 +82,9 @@ const signUpPost = [
 ];
 
 const loginGet = async (req, res) => {
-  let errors = [];
-
-  if (req.session.messages.length) {
-    for (let i = 0; i < req.session.messages.length; i++) {
-      errors.push({ msg: req.session.messages.splice(0, 1) });
-      i--;
-    }
-  }
-
   res.render('login_form', {
     title: 'Login',
-    errors: errors, 
+    errors: req.session.messages ? [{ msg: req.session.messages.at(-1) }] : [], 
   });
 };
 
@@ -111,7 +104,35 @@ const logoutGet = async (req, res, next) => {
   });
 };
 
-// TODO member_form
+const memberPageGet = (req, res) => {
+  res.render('member_form', {
+    title: 'Become a member',
+  });
+};
+
+const memberPagePost = [
+  body('member_password')
+    .trim()
+    .custom((value) => {
+      return value === process.env.MEMBER;
+    })
+    .withMessage('Wrong member password'),
+
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render('member_form', {
+        title: 'Become a member',
+        errors: errors.array(),
+      });
+    } else {
+      await db.updateUserMembership(req.user.id);
+
+      res.redirect('/');
+    }
+  },
+];
 
 const newMessageGet = async (req, res) => {
   res.render('message_form', {
@@ -146,6 +167,8 @@ module.exports = {
   loginGet,
   loginPost,
   logoutGet,
+  memberPageGet,
+  memberPagePost,
   newMessageGet,
   newMessagePost,
 }

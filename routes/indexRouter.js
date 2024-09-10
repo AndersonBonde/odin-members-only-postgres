@@ -9,6 +9,8 @@ router.post('/signup', indexController.signUpPost);
 router.get('/login', indexController.loginGet);
 router.post('/login', indexController.loginPost);
 router.get('/logout', indexController.logoutGet);
+router.get('/member', indexController.memberPageGet);
+router.post('/member', indexController.memberPagePost);
 router.get('/message', indexController.newMessageGet);
 router.post('/message', indexController.newMessagePost);
 

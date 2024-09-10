@@ -27,9 +27,14 @@ async function findUserByEmail(email) {
   return rows[0];
 }
 
+async function updateUserMembership(id) {
+  await pool.query('UPDATE users SET membership = true WHERE id = $1', [id]);
+}
+
 module.exports = {
   getAllMessages,
   createMessage,
   createUser,
   findUserByEmail,
+  updateUserMembership,
 }
