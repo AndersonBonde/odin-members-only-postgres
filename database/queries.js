@@ -1,7 +1,7 @@
 const pool = require('./pool');
 
 async function getAllMessages() {
-  const { rows } = await pool.query('SELECT messages.title, messages.content, messages.timestamp, users.firstname, users.lastname, users.email, users.membership, users.admin FROM messages INNER JOIN users ON messages.user_id = users.id');
+  const { rows } = await pool.query('SELECT messages.id, messages.title, messages.content, messages.timestamp, users.firstname, users.lastname, users.email, users.membership, users.admin FROM messages INNER JOIN users ON messages.user_id = users.id');
 
   return rows;
 };
@@ -33,6 +33,10 @@ async function updateAdminStatus(id) {
   await pool.query('UPDATE users SET admin = true WHERE id = $1', [id]);
 }
 
+async function deleteMessage(id) {
+  await pool.query('DELETE FROM messages WHERE id = $1', [id]);
+}
+
 module.exports = {
   getAllMessages,
   createMessage,
@@ -40,4 +44,5 @@ module.exports = {
   findUserByEmail,
   updateUserMembership,
   updateAdminStatus,
+  deleteMessage,
 }

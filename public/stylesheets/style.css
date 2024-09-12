@@ -25,6 +25,8 @@ h1 {
 }
 
 .message_card {
+  display: flex;
+  flex-direction: column;
   background-color: white;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -50,6 +52,14 @@ h1 {
   cursor: pointer;
   outline: 1px solid black;
   border-radius: 4px;
+}
+
+.delete_btn {
+  background-color: tomato;
+  border-radius: 6px;
+  margin-top: 8px;
+  margin-bottom: -6px;
+  align-self: end;
 }
 
 /*

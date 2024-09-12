@@ -194,6 +194,14 @@ const adminPost = [
   },
 ];
 
+const deleteMessageGet = async (req, res) => {
+  if (!req.user.admin) return;
+
+  await db.deleteMessage(req.params.id);
+
+  res.redirect('/');
+}
+
 module.exports = {
   index,
   signUpGet,
@@ -207,4 +215,5 @@ module.exports = {
   newMessagePost,
   adminGet,
   adminPost,
+  deleteMessageGet,
 }

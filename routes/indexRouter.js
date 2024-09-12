@@ -15,5 +15,6 @@ router.get('/message', indexController.newMessageGet);
 router.post('/message', indexController.newMessagePost);
 router.get('/admin', indexController.adminGet);
 router.post('/admin', indexController.adminPost);
+router.get('/delete/:id', indexController.deleteMessageGet);
 
 module.exports = router;
