@@ -22,7 +22,7 @@
     </header>
     <% if (locals.user) { %>
       <div class="user_info" style="margin-bottom: 8px;">
-        <p>Logged in as <%= user.email %> <%= user.membership ? 'member' : '' %></p>
+        <p>Logged in as <%= user.email %> <%= user.membership ? 'member' : '' %> <%= user.admin ? 'admin' : '' %></p>
       </div>
     <% } %>
 

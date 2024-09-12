@@ -10,8 +10,6 @@ async function createMessage(user, messageObj) {
   const { title, content } = messageObj;
   const { id } = user;
 
-  // TODO Update to include user_id, user_id is required to not be null;
-
   await pool.query('INSERT INTO messages (title, content, user_id) VALUES ($1, $2, $3)', [title, content, id]);
 }
 
@@ -31,10 +29,15 @@ async function updateUserMembership(id) {
   await pool.query('UPDATE users SET membership = true WHERE id = $1', [id]);
 }
 
+async function updateAdminStatus(id) {
+  await pool.query('UPDATE users SET admin = true WHERE id = $1', [id]);
+}
+
 module.exports = {
   getAllMessages,
   createMessage,
   createUser,
   findUserByEmail,
   updateUserMembership,
+  updateAdminStatus,
 }

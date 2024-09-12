@@ -13,5 +13,7 @@ router.get('/member', indexController.memberPageGet);
 router.post('/member', indexController.memberPagePost);
 router.get('/message', indexController.newMessageGet);
 router.post('/message', indexController.newMessagePost);
+router.get('/admin', indexController.adminGet);
+router.post('/admin', indexController.adminPost);
 
 module.exports = router;

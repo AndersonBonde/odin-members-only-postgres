@@ -160,6 +160,40 @@ const newMessagePost = [
   }
 ];
 
+const adminGet = (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render('admin_form', {
+      title: 'Please enter the admin password',
+    });
+  } else {
+    res.redirect('/');
+  }
+};
+
+const adminPost = [
+  body('admin_password')
+    .trim()
+    .custom((value) => {
+      return value === process.env.ADMIN;
+    })
+    .withMessage('Wrong admin password'),
+
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render('admin_form', {
+        title: 'Admin',
+        errors: errors.array(),
+      });
+    } else {
+      await db.updateAdminStatus(req.user.id);
+
+      res.redirect('/');
+    }
+  },
+];
+
 module.exports = {
   index,
   signUpGet,
@@ -171,4 +205,6 @@ module.exports = {
   memberPagePost,
   newMessageGet,
   newMessagePost,
+  adminGet,
+  adminPost,
 }
